@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        /* Set the size of the div element that contains the map */
+       #map {
+         height: 400px;  /* The height is 400 pixels */
+         width: 100%;  /* The width is the width of the web page */
+        }
+     </style>
+    <title>Google Maps API</title>
+</head>
+<body>
+    <h1>Google Maps API</h1>
+    <!--The div element for the map -->
+    <div id="map"></div>
+    <script>
+        // Initialize and add the map
+      function initMap(latitude,longitude) {
+        // The location of Uluru
+        var loc = {lat: Number(latitude), lng: Number(longitude)};
+        // The map, centered at Uluru
+        var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 4, center: loc});
+        // The marker, positioned at Uluru
+        var marker = new google.maps.Marker({position: loc, map: map});
+        }
+      
+      var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+        };
+
+      function success(position) {
+      const latitude=position.coords.latitude;
+      document.getElementById('lat').textContent = latitude.toFixed(3);
+      const longitude=position.coords.longitude;
+      document.getElementById('lon').textContent = longitude.toFixed(3);
+
+      initMap(latitude,longitude);
+
+        }
+
+        function error(err) {
+            console.warn(`ERROR(${err.code}): ${err.message}`);
+        }
+      navigator.geolocation.getCurrentPosition(success,error,options);
+    </script>
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key (which is not needed for this tutorial)
+    * The callback parameter executes the initMap() function
+    -->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyvZkIEMfQVEG2lGkvZLWFoF7KtJ-w0Y0&callback=initMap">
+    </script>
+    <span>Latitude:</span><span id='lat'></span><br>
+    <span>Longitude:</span><span id='lon'></span><br>
+</body>
+</html>

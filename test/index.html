@@ -20,13 +20,16 @@
     <script>
         // Initialize and add the map
       function initMap(latitude,longitude) {
-        // The location of Uluru
+        // Your location 
         var loc = {lat: Number(latitude), lng: Number(longitude)};
-        // The map, centered at Uluru
+        // The map, centered at your location
         var map = new google.maps.Map(
-        document.getElementById('map'), {zoom: 4, center: loc});
-        // The marker, positioned at Uluru
+        document.getElementById('map'), {zoom: 15, center: loc});
+        // The marker, positioned at your location
         var marker = new google.maps.Marker({position: loc, map: map});
+
+        var trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(map);
         }
       
       var options = {
